@@ -2,9 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"room_rating_guidence/api/controller"
-	"room_rating_guidence/common/config"
 	"room_rating_guidence/infrs/middleware"
 )
 
@@ -15,8 +13,8 @@ func InitRouter() *gin.Engine {
 	// 跨域请求中间件
 	router.Use(middleware.Cors())
 	// 图片访问路径静态文件夹可直接访问
-	router.StaticFS(config.Config.ImageSettings.UploadDir,
-		http.Dir(config.Config.ImageSettings.UploadDir))
+	//router.StaticFS(config.Config.ImageSettings.UploadDir,
+	//	http.Dir(config.Config.ImageSettings.UploadDir))
 	// 日志log中间件
 	router.Use(middleware.Logger())
 	register(router)

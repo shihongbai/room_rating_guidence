@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"room_rating_guidence/common/config"
+	"room_rating_guidence/infrs/db"
 	"room_rating_guidence/infrs/log"
 	"room_rating_guidence/router"
 	"time"
@@ -43,4 +44,12 @@ func main() {
 		log.Info("Server Shutdown:", err)
 	}
 	log.Info("Server exiting")
+}
+
+// 初始化连接
+func init() {
+	// mysql
+	db.SetupDBLink()
+	// redis
+	//redis.SetupRedisDb()
 }
