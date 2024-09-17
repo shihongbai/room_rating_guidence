@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>看房评分助手</title>
+    <style>
+        body {
+            background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;
+            background-size: 100% 130%;
+        }
+
+        #login_box {
+            width: 20%;
+            height: 450px;
+            background-color: #00000060;
+            margin: auto;
+            margin-top: 10%;
+            text-align: center;
+            border-radius: 10px;
+            padding: 50px 50px;
+        }
+
+        h2 {
+            color: #ffffff90;
+            margin-top: 5%;
+        }
+
+        #input-box {
+            margin-top: 5%;
+        }
+
+        span {
+            color: #fff;
+        }
+
+        input {
+            border: 0;
+            width: 60%;
+            font-size: 15px;
+            color: #fff;
+            background: transparent;
+            border-bottom: 2px solid #fff;
+            padding: 5px 10px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 60%;
+            height: 30px;
+            border-radius: 10px;
+            border: 0;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            font-size: 15px;
+            background-image: linear-gradient(to right, #30cfd0, #330867);
+            cursor: pointer;
+        }
+
+        #sign_up {
+            margin-top: 20px;
+        }
+
+        a {
+            color: #ffffff90;
+        }
+    </style>
+</head>
+
+<body>
+<div id="login_box">
+    <h2>看房评分助手</h2>
+    <div id="input_box">
+        <input type="text" id="username" placeholder="请输入用户名">
+    </div>
+    <div class="input_box">
+        <input type="password" id="password" placeholder="请输入密码">
+    </div>
+    <button id="login_button">登录</button>
+    <br>
+    <div id="sign_up">
+        <a href="/register">没有账号？去注册</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('login_button').addEventListener('click', function () {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            alert('用户名和密码不能为空');
+            return;
+        }
+
+        fetch('/api/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('登录成功！');
+                    // 在登录成功后可以重定向到主页或其他页面
+                    window.location.href = '/home';
+                } else {
+                    alert('登录失败：' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('登录请求失败');
+            });
+    });
+</script>
+</body>
+</html>

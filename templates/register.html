@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <style>
+        body {
+            background: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_1280.jpg') no-repeat;
+            background-size: 100% 130%;
+        }
+
+        #login_box {
+            width: 20%;
+            height: 400px;
+            background-color: #00000060;
+            margin: auto;
+            margin-top: 10%;
+            text-align: center;
+            border-radius: 10px;
+            padding: 50px 50px;
+        }
+
+        h2 {
+            color: #ffffff90;
+            margin-top: 5%;
+        }
+
+        #input-box {
+            margin-top: 5%;
+        }
+
+        span {
+            color: #fff;
+        }
+
+        input {
+            border: 0;
+            width: 60%;
+            font-size: 15px;
+            color: #fff;
+            background: transparent;
+            border-bottom: 2px solid #fff;
+            padding: 5px 10px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        button {
+            margin-top: 50px;
+            width: 60%;
+            height: 30px;
+            border-radius: 10px;
+            border: 0;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            font-size: 15px;
+            background-image: linear-gradient(to right, #30cfd0, #330867);
+        }
+
+        #sign_up {
+            margin-top: 20px;
+        }
+
+        a {
+            color: #b94648;
+        }
+    </style>
+</head>
+
+<body>
+<div id="login_box">
+    <h2>用户注册</h2>
+    <div id="input_box">
+        <input id="username" type="text" placeholder="请输入用户名">
+    </div>
+    <div class="input_box">
+        <input id="password" type="password" placeholder="请输入密码">
+    </div>
+    <div class="input_box">
+        <input id="confirmPassword" type="password" placeholder="请确认密码">
+    </div>
+    <button id="sign_up">注册</button>
+    <br>
+</div>
+
+<script>
+    document.getElementById("sign_up").addEventListener('click', function () {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        fetch('/api/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                confirmPassword: confirmPassword
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('注册成功！');
+                    // 在登录成功后可以重定向到主页或其他页面
+                    window.location.href = '/index';
+                } else {
+                    alert('注册失败：' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('注册请求失败');
+            });
+    })
+</script>
+</body>
+</html>
